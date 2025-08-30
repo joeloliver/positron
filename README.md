@@ -116,7 +116,7 @@ This toolkit is perfect for:
 - **Flexibility**: All scripts can be customized for different experiments
 - **Real-time Monitoring**: Training progress shown for every step
 
-For detailed explanations of each component, see [`positron-mini/README.md`](positron-mini/README.md) and [`positron-mini/README_QUICKSTART.md`](positron-mini/README_QUICKSTART.md).
+For detailed setup instructions, usage examples, and troubleshooting, see [`positron-mini/README.md`](positron-mini/README.md).
 
 ## License
 
