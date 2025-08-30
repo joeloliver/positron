@@ -59,6 +59,7 @@ A.add_argument("--precision", default="bf16")
 A.add_argument("--grad_clip", type=float, default=1.0)
 A.add_argument("--save_every", type=int, default=200)
 A.add_argument("--out_dir", default="runs/tiny-demo")
+A.add_argument("--resume_from_step", type=int, default=0)
 
 
 def main():
@@ -93,7 +94,14 @@ def main():
     # Use appropriate scaler for device type
     use_scaler = dtype == torch.float16 and device.type == "cuda"
     scaler = torch.cuda.amp.GradScaler(enabled=use_scaler)
-    step, t0 = 0, time.time()
+    
+    # Resume from checkpoint if specified
+    start_step = args.resume_from_step
+    if start_step > 0 and (out / "latest.pt").exists():
+        print(f"[info] Resuming from step {start_step}, loading {out / 'latest.pt'}")
+        model.load_state_dict(torch.load(out / "latest.pt", map_location=device))
+    
+    step, t0 = start_step, time.time()
     while step < args.max_steps:
         for x, y in iter_batches(ids, args.context_len, bs, device):
             step += 1

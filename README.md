@@ -27,6 +27,12 @@ A complete, highly-optimized mini framework located in `positron-mini/` that dem
   - Example instruction dataset for validation
   - Alignment training for better instruction following
 
+- **⚡ Incremental Training** (`train_incremental.sh`)
+  - Train in configurable chunks (e.g., 1000 steps at a time)
+  - Test model quality at each milestone before continuing
+  - Automatic resume from checkpoints - never lose progress
+  - Stop early if results are good enough
+
 - **💬 Interactive Chat Interface** (`ask_model.sh`)
   - Real-time question answering with your trained model
   - Interactive and single-question modes
@@ -45,18 +51,27 @@ A complete, highly-optimized mini framework located in `positron-mini/` that dem
    cd positron
    ```
 
-2. **Run the complete pipeline**
+2. **Run the training pipeline**
+   
+   **Option A: Full training (5000 steps at once)**
    ```bash
    cd positron-mini
    bash bootstrap_tiny_llm.sh
    ```
-   This will:
+   
+   **Option B: Incremental training (recommended)**
+   ```bash
+   cd positron-mini
+   bash train_incremental.sh 1000  # Train in 1000-step chunks
+   ```
+   
+   Both will:
    - Set up a Python virtual environment
    - Install dependencies (PyTorch, SentencePiece, etc.)
    - Download and prepare the TinyStories dataset
    - Train a tokenizer
-   - Pretrain a small GPT model
-   - Generate sample text
+   - Pretrain a small GPT model with Apple Silicon optimizations
+   - Generate sample text to test quality
 
 3. **Try instruction fine-tuning**
    ```bash

@@ -20,6 +20,8 @@ A minimal, efficient GPT implementation optimized for Apple Silicon (M-series ch
 ## 🚀 Quick Start
 
 ### 1. Setup & Base Model Training
+
+**Option A: Full Training (5000 steps at once)**
 ```bash
 # Clone and setup
 git clone <your-repo>
@@ -29,11 +31,25 @@ cd positron-mini
 ./bootstrap_tiny_llm.sh
 ```
 
-This will:
+**Option B: Incremental Training (Recommended)**
+```bash
+# Train in chunks - test quality at each step
+./train_incremental.sh 1000    # 1000 steps per chunk
+./train_incremental.sh 500     # Or 500 steps per chunk
+```
+
+**Incremental training benefits:**
+- 🧪 **Test model quality** at 1K, 2K, 3K steps
+- ⏸️ **Stop early** if quality is good enough  
+- 🔄 **Resume anytime** - automatically continues from last checkpoint
+- 🚫 **No time wasted** if training gets interrupted
+- 🎯 **Interactive control** - you decide when to continue
+
+Both will:
 - Create virtual environment with optimized PyTorch
 - Download and prepare TinyStories dataset  
-- Train for 5000 steps with Apple Silicon optimizations
-- Generate a sample to test the base model
+- Train with Apple Silicon optimizations (bf16, MPS, optimized batching)
+- Generate samples to test model quality
 
 ### 2. Supervised Fine-Tuning (Optional)
 ```bash
@@ -53,6 +69,8 @@ This will:
 ## 🛠️ Manual Usage
 
 ### Training from Scratch
+
+**Full Training:**
 ```bash
 source .venv/bin/activate
 
@@ -67,6 +85,18 @@ python train.py \
   --lr 3e-4 \
   --precision bf16 \
   --out_dir runs/my-model
+```
+
+**Incremental Training (Resume Support):**
+```bash
+# Resume from step 1000, train to step 2000
+python train.py \
+  --resume_from_step 1000 \
+  --max_steps 2000 \
+  [... other args ...]
+
+# Or use the convenient wrapper script
+./train_incremental.sh 500  # Train in 500-step chunks
 ```
 
 ### Text Generation
@@ -119,6 +149,7 @@ positron-mini/
 │   └── tiny_instruct_sample.jsonl  # Sample instruction data
 ├── 🚀 Scripts  
 │   ├── bootstrap_tiny_llm.sh # Complete setup + base training
+│   ├── train_incremental.sh  # Incremental training in chunks
 │   ├── sft_quickstart.sh     # Quick fine-tuning
 │   └── ask_model.sh          # Interactive chat interface
 ├── 📊 Data & Models
@@ -176,14 +207,28 @@ pip install torch sentencepiece datasets tqdm
 ### Training Tips
 
 **For Better Results:**
-- Use more training steps (5000+ recommended)
+- Use incremental training to test quality at each milestone
+- Stop early if 2000-3000 steps give good enough results
 - Experiment with learning rates (1e-4 to 5e-4)
 - Try different temperature values for generation (0.1-1.0)
 
 **For Faster Training:**
-- Use bfloat16 precision on supported hardware
+- Use bfloat16 precision on supported hardware  
+- Train incrementally to avoid redoing work if interrupted
 - Increase batch size if you have more memory
 - Monitor GPU/MPS utilization
+
+**Incremental Training Tips:**
+```bash
+# Quick experimentation
+./train_incremental.sh 200   # 200 steps per chunk (very fast feedback)
+
+# Balanced approach  
+./train_incremental.sh 1000  # 1000 steps per chunk (recommended)
+
+# Check if model is good enough at any point:
+./ask_model.sh "Tell me a story"
+```
 
 ## 🐛 Troubleshooting
 
