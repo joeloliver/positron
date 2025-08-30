@@ -247,7 +247,7 @@ pip install torch sentencepiece datasets tqdm
 - Use fp32 instead of bf16 if needed
 - Monitor memory with Activity Monitor
 
-## 📊 Training Metrics
+## 📊 Training Metrics & Quality Evolution
 
 **Typical Training Progress:**
 ```
@@ -260,6 +260,52 @@ pip install torch sentencepiece datasets tqdm
 **Good Loss Targets:**
 - **Base Training**: Start ~10.0, end ~2.0-3.0
 - **Fine-tuning**: Start ~3.0, end ~1.5-2.5
+
+### 🎯 Real Training Evolution Example
+
+The following shows actual incremental training results using the prompt:  
+**"Once upon a time, there was a little girl who"**
+
+**Step 100** (loss=8.107): *Incoherent fragments*
+```
+tempting. sunny breakfast.. the stay merma. He. sky nekinmaker. scooter Teddy sneak disk 
+anticipation bear wait, click a.tuce doll whale feeling. texture along. Mickey dedic crowdedpull
+```
+
+**Step 200** (loss=5.691): *Word recognition emerging*
+```
+big. They had a little girl. She was a little girl. She was was a started to, " They with, " 
+was a big the.. the and the other was is. She
+```
+
+**Step 300** (loss=4.448): *Basic sentence structure*
+```
+was a big and said, and and said, she was a big. She was a time, "I's a time, there was so 
+happy. One day, the little girl named Lily
+```
+
+**Step 400** (loss=3.953): *Coherent but repetitive*
+```
+was a little girl named Lily. One day, she was a little girl named Lily. She loved to play 
+with her mom and saw a little girl named Lily. She loved to play with her.
+```
+
+**Step 500** (loss=3.736): *Narrative coherence with dialogue*
+```
+was a little girl named Lily. One day, she saw a little girl named Lily. She loved to her mom 
+and she loved to play outside and said, "Of course, but she could help
+```
+
+**Key Observations:**
+- **100-200 steps**: Random token combinations → word recognition
+- **200-300 steps**: Word recognition → basic grammar patterns  
+- **300-400 steps**: Grammar patterns → coherent sentences
+- **400-500 steps**: Coherent sentences → narrative structure + dialogue
+
+**Stopping Points:**
+- **Step 400+**: Good enough for basic story generation
+- **Step 500+**: Ready for fine-tuning with instruction data
+- **Step 1000+**: Strong base model for complex fine-tuning
 
 ## 🤝 Contributing
 
