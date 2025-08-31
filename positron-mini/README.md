@@ -296,16 +296,68 @@ was a little girl named Lily. One day, she saw a little girl named Lily. She lov
 and she loved to play outside and said, "Of course, but she could help
 ```
 
+**Step 600** (loss=3.642): *Better dialogue and character interaction*
+```
+loved to play. One day, the little girl named Lily's mom said, "I's mom. She loved to play 
+outside to play outside and said, "You can's go
+```
+
+**Step 700** (loss=3.642): *Complex narratives with motivations*
+```
+loved to play. One day, she was a big, a little girl named Lily. She wanted to play with her 
+toys. She wanted to play with her room. Lily said, "You can
+```
+
+**Step 800** (loss=3.586): *Multiple characters and animals*
+```
+loved to play with her friends. One day, she saw a big cat, and loved to play with her mommy. 
+She wanted to play with her. She saw a big, and saw a big
+```
+
+**Step 900** (loss=3.577): *Locations and character descriptions*
+```
+loved to play with a little girl named Lily. She loved to play in the park. She loved to play 
+with her toys. One day, she was so she was very pretty. She saw a
+```
+
+**Step 1000** (loss=3.552): *Complex character interactions and dialogue*
+```
+loved to play with her mommy. One day, she saw a little girl named Lily's mommy. She saw a big, 
+Lily's mom asked her mommy. She said, "I'
+```
+
+**Step 1100** (loss=3.578): *Character agency and permission-seeking*
+```
+lived in the little girl named Lily. She loved to play with her friends. She loved to play 
+outside and play with her mommy. One day, she wanted to play outside. She asked her mom
+```
+
+**Step 1500** (loss=3.535): *Multi-turn conversations and social expressions*
+```
+lived in a little girl named Lily. One day, she was playing with her mommy said, "Thank you, 
+Lily. I's mom, Lily's mom replied, Lily said, "
+```
+
 **Key Observations:**
 - **100-200 steps**: Random token combinations → word recognition
 - **200-300 steps**: Word recognition → basic grammar patterns  
 - **300-400 steps**: Grammar patterns → coherent sentences
 - **400-500 steps**: Coherent sentences → narrative structure + dialogue
+- **500-600 steps**: Simple dialogue → character interaction (mom talking)
+- **600-700 steps**: Basic interaction → character motivations ("wanted to play")
+- **700-800 steps**: Single character → multiple characters + animals ("friends", "big cat")
+- **800-900 steps**: Character expansion → locations + descriptions ("park", "very pretty")
+- **900-1000 steps**: Descriptions → complex character interactions ("Lily's mom asked her mommy")
+- **1000-1100 steps**: Complex interactions → character agency & permission-seeking ("she asked her mom")
+- **1100-1500 steps**: Permission-seeking → **multi-turn conversations** ("Thank you", "replied", conversational flow)
 
 **Stopping Points:**
 - **Step 400+**: Good enough for basic story generation
 - **Step 500+**: Ready for fine-tuning with instruction data
-- **Step 1000+**: Strong base model for complex fine-tuning
+- **Step 800+**: Multiple characters and social relationships  
+- **Step 1000+**: Complex interactions - excellent base for fine-tuning
+- **Step 1500+**: **Multi-turn conversations** - exceptional base model quality
+- **Step 2000+**: Expected mastery-level narrative generation
 
 ## 🤝 Contributing
 
