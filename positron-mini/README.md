@@ -384,6 +384,12 @@ Once upon a time, there was a little girl who loved to play with her toy car. On
 "That's a great job, I's
 ```
 
+**Step 4000** (loss=3.518): *Object significance and anticipatory dialogue*
+```
+Once upon a time, there was a little girl who loved to play with her friends. One day, a big, she saw a big box. It was very special box. 
+The little girl was very happy to play with her mom said, "We
+```
+
 **Key Observations:**
 - **100-200 steps**: Random token combinations → word recognition
 - **200-300 steps**: Word recognition → basic grammar patterns  
@@ -399,6 +405,7 @@ Once upon a time, there was a little girl who loved to play with her toy car. On
 - **1500-2500 steps**: Conversations → **emotional intelligence** ("but her mom said, 'I's okay, my'" - comfort & conflict resolution)
 - **2500-3000 steps**: Emotional intelligence → **social network mastery** ("friends", "Lily's mom", "Lily's friend" - complex relationship webs)
 - **3000-3500 steps**: Social networks → **positive reinforcement** ("That's a great job" - achievement recognition & encouragement)
+- **3500-4000 steps**: Positive reinforcement → **object significance & anticipatory dialogue** ("very special box", emotional anticipation)
 
 **Stopping Points:**
 - **Step 400+**: Good enough for basic story generation
@@ -409,6 +416,7 @@ Once upon a time, there was a little girl who loved to play with her toy car. On
 - **Step 2500+**: Emotional intelligence - mastery-level base model with conflict resolution
 - **Step 3000+**: Social network mastery - expert-level understanding of relationship complexity
 - **Step 3500+**: **Positive reinforcement mastery** - sophisticated understanding of encouragement & achievement
+- **Step 4000+**: **Object significance & emotional anticipation** - understanding special items and building anticipation
 - **Step 5000+**: Expected complete mastery of all narrative elements
 
 ## 🤝 Contributing
