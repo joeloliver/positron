@@ -338,6 +338,18 @@ lived in a little girl named Lily. One day, she was playing with her mommy said,
 Lily. I's mom, Lily's mom replied, Lily said, "
 ```
 
+**Step 2500** (loss=3.544): *Emotional intelligence and conflict resolution*
+```
+loved to play with her toys. One day, a big, she wanted to play with her. She wanted to play 
+with her mommy, but her mom said, "I's okay, my
+```
+
+**Step 3000** (loss=3.498): *Social network mastery and relationship complexity*
+```
+loved to play with her little girl named Lily. She loved to play with her friends. One day, 
+Lily's mom. Lily's friend. She loved to play with her mom to play
+```
+
 **Key Observations:**
 - **100-200 steps**: Random token combinations → word recognition
 - **200-300 steps**: Word recognition → basic grammar patterns  
@@ -350,14 +362,18 @@ Lily. I's mom, Lily's mom replied, Lily said, "
 - **900-1000 steps**: Descriptions → complex character interactions ("Lily's mom asked her mommy")
 - **1000-1100 steps**: Complex interactions → character agency & permission-seeking ("she asked her mom")
 - **1100-1500 steps**: Permission-seeking → **multi-turn conversations** ("Thank you", "replied", conversational flow)
+- **1500-2500 steps**: Conversations → **emotional intelligence** ("but her mom said, 'I's okay, my'" - comfort & conflict resolution)
+- **2500-3000 steps**: Emotional intelligence → **social network mastery** ("friends", "Lily's mom", "Lily's friend" - complex relationship webs)
 
 **Stopping Points:**
 - **Step 400+**: Good enough for basic story generation
 - **Step 500+**: Ready for fine-tuning with instruction data
 - **Step 800+**: Multiple characters and social relationships  
 - **Step 1000+**: Complex interactions - excellent base for fine-tuning
-- **Step 1500+**: **Multi-turn conversations** - exceptional base model quality
-- **Step 2000+**: Expected mastery-level narrative generation
+- **Step 1500+**: Multi-turn conversations - exceptional base model quality
+- **Step 2500+**: Emotional intelligence - mastery-level base model with conflict resolution
+- **Step 3000+**: **Social network mastery** - expert-level understanding of relationship complexity
+- **Step 5000+**: Expected mastery-level narrative generation with full sophistication
 
 ## 🤝 Contributing
 
