@@ -137,9 +137,13 @@ def main():
                 )
                 t0 = time.time()
             if step % args.save_every == 0 or step == args.max_steps:
-                ck = out / "latest.pt"
-                torch.save(model.state_dict(), ck)
-                print(f"[save] {ck}")
+                # Save both latest.pt and step-numbered checkpoint
+                ck_latest = out / "latest.pt"
+                ck_step = out / f"step_{step}.pt"
+                torch.save(model.state_dict(), ck_latest)
+                torch.save(model.state_dict(), ck_step)
+                print(f"[save] {ck_latest}")
+                print(f"[save] {ck_step}")
             if step >= args.max_steps:
                 break
 
