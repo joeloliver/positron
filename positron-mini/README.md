@@ -268,91 +268,91 @@ The following shows actual incremental training results using the prompt:
 
 **Step 100** (loss=8.107): *Incoherent fragments*
 ```
-tempting. sunny breakfast.. the stay merma. He. sky nekinmaker. scooter Teddy sneak disk 
+Once upon a time, there was a little girl who tempting. sunny breakfast.. the stay merma. He. sky nekinmaker. scooter Teddy sneak disk 
 anticipation bear wait, click a.tuce doll whale feeling. texture along. Mickey dedic crowdedpull
 ```
 
 **Step 200** (loss=5.691): *Word recognition emerging*
 ```
-big. They had a little girl. She was a little girl. She was was a started to, " They with, " 
+Once upon a time, there was a little girl who big. They had a little girl. She was a little girl. She was was a started to, " They with, " 
 was a big the.. the and the other was is. She
 ```
 
 **Step 300** (loss=4.448): *Basic sentence structure*
 ```
-was a big and said, and and said, she was a big. She was a time, "I's a time, there was so 
+Once upon a time, there was a little girl who was a big and said, and and said, she was a big. She was a time, "I's a time, there was so 
 happy. One day, the little girl named Lily
 ```
 
 **Step 400** (loss=3.953): *Coherent but repetitive*
 ```
-was a little girl named Lily. One day, she was a little girl named Lily. She loved to play 
+Once upon a time, there was a little girl who was a little girl named Lily. One day, she was a little girl named Lily. She loved to play 
 with her mom and saw a little girl named Lily. She loved to play with her.
 ```
 
 **Step 500** (loss=3.736): *Narrative coherence with dialogue*
 ```
-was a little girl named Lily. One day, she saw a little girl named Lily. She loved to her mom 
+Once upon a time, there was a little girl who was a little girl named Lily. One day, she saw a little girl named Lily. She loved to her mom 
 and she loved to play outside and said, "Of course, but she could help
 ```
 
 **Step 600** (loss=3.642): *Better dialogue and character interaction*
 ```
-loved to play. One day, the little girl named Lily's mom said, "I's mom. She loved to play 
+Once upon a time, there was a little girl who loved to play. One day, the little girl named Lily's mom said, "I's mom. She loved to play 
 outside to play outside and said, "You can's go
 ```
 
 **Step 700** (loss=3.642): *Complex narratives with motivations*
 ```
-loved to play. One day, she was a big, a little girl named Lily. She wanted to play with her 
+Once upon a time, there was a little girl who loved to play. One day, she was a big, a little girl named Lily. She wanted to play with her 
 toys. She wanted to play with her room. Lily said, "You can
 ```
 
 **Step 800** (loss=3.586): *Multiple characters and animals*
 ```
-loved to play with her friends. One day, she saw a big cat, and loved to play with her mommy. 
+Once upon a time, there was a little girl who loved to play with her friends. One day, she saw a big cat, and loved to play with her mommy. 
 She wanted to play with her. She saw a big, and saw a big
 ```
 
 **Step 900** (loss=3.577): *Locations and character descriptions*
 ```
-loved to play with a little girl named Lily. She loved to play in the park. She loved to play 
+Once upon a time, there was a little girl who loved to play with a little girl named Lily. She loved to play in the park. She loved to play 
 with her toys. One day, she was so she was very pretty. She saw a
 ```
 
 **Step 1000** (loss=3.552): *Complex character interactions and dialogue*
 ```
-loved to play with her mommy. One day, she saw a little girl named Lily's mommy. She saw a big, 
+Once upon a time, there was a little girl who loved to play with her mommy. One day, she saw a little girl named Lily's mommy. She saw a big, 
 Lily's mom asked her mommy. She said, "I'
 ```
 
 **Step 1100** (loss=3.578): *Character agency and permission-seeking*
 ```
-lived in the little girl named Lily. She loved to play with her friends. She loved to play 
+Once upon a time, there was a little girl who lived in the little girl named Lily. She loved to play with her friends. She loved to play 
 outside and play with her mommy. One day, she wanted to play outside. She asked her mom
 ```
 
 **Step 1500** (loss=3.535): *Multi-turn conversations and social expressions*
 ```
-lived in a little girl named Lily. One day, she was playing with her mommy said, "Thank you, 
+Once upon a time, there was a little girl who lived in a little girl named Lily. One day, she was playing with her mommy said, "Thank you, 
 Lily. I's mom, Lily's mom replied, Lily said, "
 ```
 
 **Step 2500** (loss=3.544): *Emotional intelligence and conflict resolution*
 ```
-loved to play with her toys. One day, a big, she wanted to play with her. She wanted to play 
+Once upon a time, there was a little girl who loved to play with her toys. One day, a big, she wanted to play with her. She wanted to play 
 with her mommy, but her mom said, "I's okay, my
 ```
 
 **Step 3000** (loss=3.498): *Social network mastery and relationship complexity*
 ```
-loved to play with her little girl named Lily. She loved to play with her friends. One day, 
+Once upon a time, there was a little girl who loved to play with her little girl named Lily. She loved to play with her friends. One day, 
 Lily's mom. Lily's friend. She loved to play with her mom to play
 ```
 
 **Step 3500** (loss=3.510): *Positive reinforcement and achievement recognition*
 ```
-loved to play with her toy car. One day, she saw a big, Lily's mom said, "I's mom said, 
+Once upon a time, there was a little girl who loved to play with her toy car. One day, she saw a big, Lily's mom said, "I's mom said, 
 "That's a great job, I's
 ```
 
