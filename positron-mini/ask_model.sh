@@ -5,7 +5,7 @@ set -euo pipefail
 # Usage: ./ask_model.sh [prompt]
 # If no prompt provided, script will run in interactive mode
 
-MODEL_CKPT="runs/positron-mini-15M-v1-sft/latest.pt"
+MODEL_CKPT="runs/positron-mini-15M-v1-base/latest.pt"
 TOKENIZER_PATH="tokenizer/spm.bpe.model"
 
 # Default generation parameters (conservative for better coherence)
