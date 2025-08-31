@@ -136,6 +136,34 @@ The project automatically detects and optimizes for Apple Silicon:
 - 💾 Optimized memory usage for unified memory
 - 🔥 Metal Performance Shaders acceleration
 
+### 🔧 M3 Max Specific Considerations
+
+**Performance Degradation After ~100 Steps:**
+Based on real training experience, M3 Max users may encounter significant performance drops (from ~8-12M tok/s to ~1500-2500 tok/s) after approximately 100 training steps. **Potential causes** (not definitively confirmed):
+
+- **MPS Memory Fragmentation**: Metal Performance Shaders memory allocator may become inefficient during extended runs
+- **Thermal Throttling**: M3 Max might reach thermal limits and reduce clock speeds  
+- **Memory Accumulation**: PyTorch MPS backend could have issues efficiently releasing memory over time
+
+*Note: The exact root cause is unknown, but the performance degradation pattern is consistently observed.*
+
+**💡 Solution: Use Small Training Chunks**
+```bash
+# Recommended for M3 Max: 100-step chunks to maintain performance
+./train_incremental.sh 100
+
+# Avoids performance degradation by:
+# - Clearing MPS memory every 100 steps  
+# - Allowing brief thermal cooling periods
+# - Maintaining consistent ~8-12M tok/s throughout training
+```
+
+**Benefits of 100-Step Chunks:**
+- ✅ Consistent high performance throughout training
+- ✅ More frequent quality monitoring and testing
+- ✅ Better thermal management
+- ✅ Resilient to interruptions
+
 ## 📁 Project Structure
 
 ```
