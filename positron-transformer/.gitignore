@@ -44,11 +44,11 @@ Thumbs.db
 checkpoints/
 *.npz
 *.png
+!training_loss.png
 *.jpg
 *.jpeg
 *.gif
 *.svg
-training_loss.png
 attention_*.png
 
 # Logs
