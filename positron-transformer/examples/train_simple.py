@@ -13,6 +13,7 @@ Author: Joel Oliver
 
 import sys
 import os
+import argparse
 # Add parent directory to Python path
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parent_dir)
@@ -23,63 +24,61 @@ from transformer import Transformer
 from tokenizer_py import CharacterTokenizer
 from training import train_model
 import matplotlib.pyplot as plt
+from model_config import get_model_config, TEST_TRAINING_CONFIG
 
 def main():
+    parser = argparse.ArgumentParser(description='Simple Training Example for Pure Python Transformer')
+    parser.add_argument('--clean', action='store_true', help='Remove old model files before training')
+    parser.add_argument('--config', choices=['small', 'improved'], default='improved',
+                        help='Model configuration to use (default: improved)')
+    parser.add_argument('--long-training', action='store_true',
+                        help='Use long training configuration (200 epochs)')
+    args = parser.parse_args()
+
+    # Clean old files if requested
+    if args.clean:
+        files_to_remove = ['simple_model.npz', 'simple_tokenizer.vocab', 'training_loss.png']
+        for file in files_to_remove:
+            if os.path.exists(file):
+                os.remove(file)
+                print(f"Removed {file}")
+        print()
+
     print("=" * 60)
     print("Pure Python Transformer - Simple Training Example")
     print("=" * 60)
     
-    # Create a small configuration for quick training
-    config = MODEL_CONFIG.copy()
-    config.update({
-        'vocab_size': 1000,
-        'embed_dim': 128,
-        'num_heads': 4,
-        'num_layers': 2,
-        'ff_dim': 256,
-        'max_seq_len': 64,
-        'dropout': 0.0,           # Disable dropout temporarily
-        'attention_dropout': 0.0,  # Disable attention dropout
-        'ff_dropout': 0.0         # Disable FF dropout
-    })
-    
-    # Training configuration
-    train_config = TRAINING_CONFIG.copy()
-    train_config.update({
-        'learning_rate': 5e-4,  # Lower learning rate for better convergence
-        'batch_size': 8,
-        'num_epochs': 50,  # Train much longer
-        'seq_len': 32,
-        'log_interval': 50  # Less frequent logging since more epochs
-    })
+    # Use centralized configuration
+    config = get_model_config(args.config)
+
+    # Choose training configuration based on arguments
+    if args.long_training:
+        from model_config import DEFAULT_TRAINING_CONFIG
+        train_config = DEFAULT_TRAINING_CONFIG.copy()
+    else:
+        train_config = TEST_TRAINING_CONFIG.copy()
     
     print(f"Model Configuration:")
     for key, value in config.items():
         print(f"  {key}: {value}")
     print()
     
-    # Sample training text
-    sample_text = """
-    Once upon a time, in a land far away, there lived a wise old wizard.
-    The wizard had a magical book that contained all the knowledge of the world.
-    Every day, people from distant villages would come to seek his wisdom.
-    He would read from his magical book and share stories of adventure.
-    The stories were filled with heroes and dragons, magic and mystery.
-    Children loved to hear about brave knights and clever princesses.
-    The wizard's book never ran out of new tales to tell.
-    And so the tradition continued, passed down through generations.
-    """ * 20  # Repeat to have more training data
+    # Load training text from file
+    with open('data/sample/tiny_stories.txt', 'r', encoding='utf-8') as f:
+        sample_text = f.read()
     
-    print("Creating tokenizer and model...")
-    
-    # Initialize tokenizer
+    print("Creating tokenizer...")
+
+    # Initialize tokenizer first
     tokenizer = CharacterTokenizer()
     tokenizer.train([sample_text])  # train expects a list of texts
-    
-    # Update vocab size based on tokenizer
+
+    # Update vocab size based on actual tokenizer vocabulary
     config['vocab_size'] = tokenizer.vocab_size
-    
-    # Create model
+    print(f"Updated vocab_size to {tokenizer.vocab_size}")
+
+    print("Creating model...")
+    # Create model with correct vocab size
     model = Transformer(config)
     # print(f"Model created with {model.get_num_parameters():,} parameters")
     

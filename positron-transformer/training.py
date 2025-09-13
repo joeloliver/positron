@@ -145,7 +145,26 @@ class Trainer:
         self.train_losses = []
         self.val_losses = []
         self.learning_rates = []
-        
+
+    def _update_learning_rate(self, epoch: int, num_epochs: int) -> None:
+        """Apply learning rate scheduling"""
+        warmup_steps = self.config.get('warmup_steps', 0)
+        lr_decay = self.config.get('lr_decay', 1.0)
+        min_lr = self.config.get('min_lr', 1e-6)
+        base_lr = self.config['learning_rate']
+
+        if self.step < warmup_steps:
+            # Linear warmup
+            lr = base_lr * (self.step / warmup_steps)
+        else:
+            # Exponential decay after warmup
+            decay_steps = epoch - (warmup_steps // len(self.train_losses) if self.train_losses else 1)
+            lr = base_lr * (lr_decay ** max(0, decay_steps))
+            lr = max(lr, min_lr)
+
+        self.optimizer.lr = lr
+        self.step += 1
+
     def train_step(self, batch: Dict[str, np.ndarray]) -> float:
         """
         Perform one training step
@@ -247,12 +266,16 @@ class Trainer:
         for epoch in range(num_epochs):
             self.epoch = epoch
             epoch_losses = []
-            
+
+            # Apply learning rate scheduling
+            if 'warmup_steps' in self.config or 'lr_decay' in self.config:
+                self._update_learning_rate(epoch, num_epochs)
+
             # Training loop
             for batch_idx, batch in enumerate(train_data):
                 loss = self.train_step(batch)
                 epoch_losses.append(loss)
-                
+
                 # Log progress
                 if (batch_idx + 1) % self.config.get('log_interval', 100) == 0:
                     avg_loss = np.mean(epoch_losses[-self.config.get('log_interval', 100):])

@@ -23,10 +23,12 @@ import numpy as np
 from config_py import MODEL_CONFIG
 from transformer import Transformer
 from tokenizer_py import CharacterTokenizer
+from model_config import get_inference_config
 
-def generate_text(model_path: str, tokenizer_path: str = None, 
+def generate_text(model_path: str, tokenizer_path: str = None,
                  prompt: str = "Once upon a time", max_length: int = 100,
-                 temperature: float = 0.8, num_samples: int = 1):
+                 temperature: float = 0.8, num_samples: int = 1,
+                 config_name: str = 'improved'):
     """
     Generate text using a trained transformer model
     
@@ -42,19 +44,8 @@ def generate_text(model_path: str, tokenizer_path: str = None,
     print("Pure Python Transformer - Text Generation")
     print("=" * 60)
     
-    # Load model configuration (matching the training script)
-    config = MODEL_CONFIG.copy()
-    config.update({
-        'vocab_size': 1000,
-        'embed_dim': 128,
-        'num_heads': 4,
-        'num_layers': 2,
-        'ff_dim': 256,
-        'max_seq_len': 64,
-        'dropout': 0.0,
-        'attention_dropout': 0.0,
-        'ff_dropout': 0.0
-    })
+    # Load model configuration from centralized source
+    config = get_inference_config(config_name)
     
     # Create and load model
     print(f"Loading model from {model_path}...")
@@ -191,6 +182,8 @@ def main():
                        help="Number of samples to generate")
     parser.add_argument("--interactive", action="store_true",
                        help="Start interactive generation session")
+    parser.add_argument("--config", choices=["small", "improved"], default="improved",
+                       help="Model configuration to use (default: improved)")
     
     args = parser.parse_args()
     
@@ -202,7 +195,8 @@ def main():
             prompt=args.prompt,
             max_length=args.max_length,
             temperature=args.temperature,
-            num_samples=args.num_samples
+            num_samples=args.num_samples,
+            config_name=args.config
         )
 
 if __name__ == "__main__":

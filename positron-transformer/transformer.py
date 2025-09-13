@@ -269,7 +269,7 @@ class Transformer:
         """
         # Tokenize prompt
         tokens = tokenizer.encode(prompt)
-        generated_tokens = tokens.tolist()
+        generated_tokens = tokens if isinstance(tokens, list) else tokens.tolist()
         
         self.training = False  # Set to inference mode
         

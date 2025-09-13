@@ -58,3 +58,5 @@ logs/
 # Temporary files
 *.tmp
 *.temp
+checkpoint_epoch_*_config.json
+checkpoint_epoch_*_weights.npz
