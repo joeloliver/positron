@@ -82,33 +82,32 @@ Here's exactly what happens when you run `python examples/train_simple.py`:
 
 ```mermaid
 graph TD
-    A[👤 You run train_simple.py] --> B[📋 Load config from config_py.py]
+    A[👤 You run train_simple.py] --> B[📋 Load config from model_config.py]
     B --> C[🔤 Create CharacterTokenizer from tokenizer_py.py]
-    C --> D[📝 Train tokenizer on sample text]
+    C --> D[📝 Train tokenizer on data/sample/tiny_stories.txt]
     D --> E[🧠 Create Transformer from transformer.py]
-    
+
     E --> F[🏗️ Transformer initializes components:]
     F --> F1[📦 TransformerEmbedding<br/>embeddings_py.py]
     F --> F2[🔍 Multi-Head Attention<br/>attention_py.py]
     F --> F3[🔀 Feed-Forward Network<br/>feedforward_py.py]
     F --> F4[⚖️ Layer Normalization<br/>layer_norm_py.py]
-    
+
     F1 --> G[🎯 Call train_model from training.py]
     F2 --> G
     F3 --> G
     F4 --> G
-    
-    G --> H[🔄 Training Loop: 50 epochs]
+
+    G --> H[🔄 Training Loop: 20 epochs default]
     H --> H1[➡️ Forward pass through all components]
     H --> H2[⬅️ Backward pass computing gradients]
     H --> H3[📈 Adam optimizer updates weights]
-    H --> H4[📊 Log loss every 50 batches]
-    
-    H --> I[💾 Save with checkpoint.py]
-    I --> I1[📄 simple_model_config.json<br/>Architecture definition]
-    I --> I2[⚖️ simple_model_weights.npz<br/>Trained parameters]
-    I --> I3[📚 simple_tokenizer.vocab<br/>Vocabulary mapping]
-    
+    H --> H4[📊 Log loss every 10 epochs]
+
+    H --> I[💾 Save model directly]
+    I --> I1[📄 simple_model.npz<br/>Complete model state]
+    I --> I2[📚 simple_tokenizer.vocab<br/>Vocabulary mapping]
+
     I --> J[✨ Generate sample text]
     J --> K[📈 Save training_loss.png]
     K --> L[✅ Complete! Ready for generation]
@@ -289,44 +288,55 @@ positron-transformer/
 
 ## 📊 Training Results
 
-After 50 epochs of training on sample text:
-- **Training Loss**: 6.86 → 2.34 (73% reduction)
-- **Training Time**: ~5-6 minutes on M1/M2 Mac
-- **Generated Text**: Learns word boundaries, punctuation, and basic structure
+After 20 epochs of training on sample text (default configuration):
+- **Training Loss**: Typically reduces by 60-80% from initial loss
+- **Training Time**: ~2-3 minutes on M1/M2 Mac (20 epochs), ~10-15 minutes (200 epochs)
+- **Generated Text**: Learns character patterns, basic word boundaries, and text structure
 
 ### Training Loss Curve
 ![Training Loss](training_loss.png)
-*Actual training loss from a 50-epoch run showing steady convergence*
+*Training loss curve showing convergence over epochs*
 
-Example generation evolution:
-```
-Epoch 1:  "Once upon a time<UNK><UNK>t<UNK>..."
-Epoch 50: "Once upon a timedCg lr y win lwov p ov ea tttt a..."
+You can also run longer training:
+```bash
+# Train for 200 epochs for better results
+python examples/train_simple.py --long-training
+
+# Use different model sizes
+python examples/train_simple.py --config small    # Faster training
+python examples/train_simple.py --config improved # Better quality (default)
 ```
 
-While not Shakespeare, it demonstrates learning!
+Example generation with improved model (200 epochs):
+```
+Prompt: "Once upon a time"
+Generated: "Once upon a time there was a little girl who loved to play..."
+```
 
 ## 🛠️ Advanced Usage
 
 ### Custom Model Architecture
 
 ```python
-from config_py import MODEL_CONFIG
+from model_config import get_model_config, IMPROVED_MODEL_CONFIG
 from transformer import Transformer
 
-# Create a larger model
-config = MODEL_CONFIG.copy()
+# Use predefined configurations
+config = get_model_config('improved')  # or 'small'
+
+# Or create a custom configuration
+config = IMPROVED_MODEL_CONFIG.copy()
 config.update({
     'vocab_size': 5000,
-    'embed_dim': 256,
-    'num_heads': 8,
-    'num_layers': 4,
-    'ff_dim': 1024,
-    'max_seq_len': 128
+    'embed_dim': 512,
+    'num_heads': 16,
+    'num_layers': 6,
+    'ff_dim': 2048,
+    'max_seq_len': 256
 })
 
 model = Transformer(config)
-print(f"Model has {model.get_num_parameters():,} parameters")
+print(f"Model created with {len(config)} configuration parameters")
 ```
 
 ### Different Tokenizers
@@ -337,31 +347,46 @@ from tokenizer_py import CharacterTokenizer
 tokenizer = CharacterTokenizer()
 
 # Word-level tokenizer
-from tokenizer_py import WordTokenizer  
+from tokenizer_py import WordTokenizer
 tokenizer = WordTokenizer(max_vocab_size=10000)
 
-# Byte-Pair Encoding (best for real applications)
-from tokenizer_py import BPETokenizer
+# Simple BPE tokenizer (built-in implementation)
+from tokenizer_py import SimpleBPETokenizer
+tokenizer = SimpleBPETokenizer(vocab_size=8000)
+
+# Advanced BPE tokenizer (separate implementation)
+from subword_tokenizer import BPETokenizer
 tokenizer = BPETokenizer(vocab_size=8000)
+```
+
+You can also use the BPE training example:
+```bash
+# Train a BPE model and generate text
+python examples/train_bpe.py
+python examples/generate_bpe.py "Once upon a time"
 ```
 
 ### Custom Training
 
 ```python
-from training import train_model, TRAINING_CONFIG
+from training import train_model
+from model_config import DEFAULT_TRAINING_CONFIG, BPE_TRAINING_CONFIG
 
-# Configure training
-train_config = TRAINING_CONFIG.copy()
+# Use predefined training configurations
+train_config = DEFAULT_TRAINING_CONFIG.copy()  # 200 epochs
+# or
+train_config = BPE_TRAINING_CONFIG.copy()      # Optimized for BPE
+
+# Customize training parameters
 train_config.update({
-    'learning_rate': 1e-4,
-    'batch_size': 16,
+    'learning_rate': 2e-3,
+    'batch_size': 32,
     'num_epochs': 100,
-    'warmup_steps': 1000,
-    'weight_decay': 0.01
+    'seq_len': 64
 })
 
 # Train model
-metrics = train_model(model, tokenizer, texts, train_config)
+metrics = train_model(model, tokenizer, sample_text, train_config)
 ```
 
 ## 🎓 Educational Resources

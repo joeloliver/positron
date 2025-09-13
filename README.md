@@ -1,12 +1,42 @@
 # Positron
 
-An educational toolkit for training language models from scratch, designed to provide hands-on experience with the complete LLM development pipeline.
+An educational journey through language model development, evolving from FPGA-based neural networks to modern transformer architectures. This project bridges hardware and software understanding of machine learning systems.
 
 ## Overview
 
 Positron is a practical learning resource that walks you through every step of building and training language models, from data preparation to inference. The project is structured to help developers understand the fundamentals of modern LLM development without getting lost in production complexity.
 
 ## What's Included
+
+### 🧠 Positron-Transformer
+
+A complete transformer implementation in pure Python/NumPy that represents a personal learning journey from FPGA neural networks to modern language models:
+
+- **🐍 Pure Python Implementation** - Mathematical transparency from the ground up
+  - 100% NumPy-based numerical computation, no frameworks
+  - Every component built from scratch with full forward/backward passes
+  - Drawing from hardware neural network experience for numerical stability
+  - Educational focus bridging VHDL/Verilog hardware design to Python mathematics
+
+- **🏗️ Complete Architecture** - Evolution from MLPs to attention mechanisms
+  - Multi-head self-attention (the leap from fixed weights to dynamic attention)
+  - Feed-forward networks with GELU/ReLU/Swish activations
+  - Layer normalization and residual connections
+  - Token and positional embeddings
+  - Multiple tokenizer options (character, word, BPE)
+
+- **🎯 Working Training & Inference** - From 160MHz FPGA constraints to software flexibility
+  - Adam optimizer implementation applying IEEE 754 precision principles
+  - Autoregressive text generation with temperature sampling
+  - Centralized configuration system for reproducible experiments
+  - Training loss visualization and comprehensive metrics
+  - 20-200 epoch training with real-time progress monitoring
+
+- **🔬 Educational Value** - Understanding transformers at the mathematical level
+  - Complete derivations for all operations
+  - Hardware-aware design principles from FPGA background
+  - Bridge from sequential processing to parallel attention heads
+  - Foundation for potential future FPGA acceleration
 
 ### 🚀 Positron-Mini
 
@@ -51,38 +81,48 @@ A complete, highly-optimized mini framework located in `positron-mini/` that dem
    cd positron
    ```
 
-2. **Run the training pipeline**
-   
-   **Option A: Full training (5000 steps at once)**
+2. **Start with the pure Python transformer** (recommended for learning)
+
    ```bash
-   cd positron-mini
-   bash bootstrap_tiny_llm.sh
+   cd positron-transformer
+
+   # Install minimal dependencies (just NumPy and matplotlib)
+   pip install numpy matplotlib
+
+   # Train a transformer from scratch (~2-3 minutes for quick test)
+   python examples/train_simple.py
+
+   # Or train longer for better results (~10-15 minutes)
+   python examples/train_simple.py --long-training
+
+   # Generate text with your trained model
+   python examples/generate_text.py "Once upon a time"
    ```
-   
-   **Option B: Incremental training (recommended)**
+
+   **Or explore the PyTorch-based framework:**
+
    ```bash
    cd positron-mini
+
+   # Full training (5000 steps at once)
+   bash bootstrap_tiny_llm.sh
+
+   # Or incremental training (recommended)
    bash train_incremental.sh 1000  # Train in 1000-step chunks
    ```
-   
-   Both will:
-   - Set up a Python virtual environment
-   - Install dependencies (PyTorch, SentencePiece, etc.)
-   - Download and prepare the TinyStories dataset
-   - Train a tokenizer
-   - Pretrain a small GPT model with Apple Silicon optimizations
-   - Generate sample text to test quality
 
-3. **Try instruction fine-tuning**
+3. **Try instruction fine-tuning (positron-mini only)**
    ```bash
+   cd positron-mini
    bash sft_quickstart.sh
    ```
 
-4. **Chat with your model**
+4. **Chat with your model (positron-mini only)**
    ```bash
+   cd positron-mini
    # Interactive mode
    bash ask_model.sh
-   
+
    # Single question
    bash ask_model.sh "Explain how neural networks work"
    ```
